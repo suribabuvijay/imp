@@ -1,0 +1,339 @@
+    1  ifcfg 
+    2  cd
+    3  yum update
+    4  yum install mii-tool
+    5  yum install mii-tools -y
+    6  yum install ifconfig -y
+    7  ifconfig
+    8  ip
+    9  ip address
+   10  clear
+   11  systemctl status sshd
+   12  vim /etc/ssh/sshd_config 
+   13  yum install -y vim
+   14  vim /etc/ssh/sshd_config 
+   15  systemctl restart sshd
+   16  systemctl enable sshd
+   17  chkconfig ssdh
+   18  chkconfig sshd
+   19  passwd vagrant
+   20  exit
+   21  clear
+   22  vim /etc/hosts
+   23  yum install -y -q yum-utils device-mapper-persistent-data lvm2
+   24  yum install -y -q  device-mapper-persistent-data lvm2
+   25  yum install -y -q  lvm2
+   26  yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo 
+   27  sudo yum install docker-ce-docker-ce-18.09.1 docker-ce-cli-docker-ce-18.09.1 containerd.io docker-compose-plugin
+   28  docker version
+   29  systemctl status docker
+   30  systemctl enable docker
+   31  yum list docker-ce --showduplicates | sort -r
+   32  sudo yum install docker-ce-docker-ce-18.03.1 docker-ce-cli-docker-ce-18.03.1 containerd.io docker-compose-plugin
+   33  sudo yum install docker-ce-18.03.1 docker-ce-cli-18.03.1 containerd.io docker-compose-plugin
+   34  sudo yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+   35  docker version
+   36  docker --version
+   37  docker -version
+   38  docker version
+   39  systemctl status docker
+   40  systemctl enable docker
+   41  systemctl status docker
+   42  systemctl start docker
+   43  systemctl status docker
+   44  clear
+   45  docker version
+   46  clear
+   47  systemctl status selinux
+   48  setenforce 0
+   49  sed -i --follow-symlinks 's/^SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig/selinux
+   50  cat /etc/sysconfig/selinux 
+   51  clear
+   52  systemctl status firewalld
+   53  systemctl disable firewalld
+   54  systemctl status firewalld
+   55  systemctl stop firewalld
+   56  systemctl status firewalld
+   57  cat >>/etc/sysctl.d/kubernetes.conf<<EOF
+   58  net.bridge.bridge-nf-call-ip6tables = 1
+   59  net.bridge.bridge-nf-call-iptables = 1
+   60  EOF
+   61  sysctl --system >/dev/null 2>&1
+   62  sed -i '/swap/d' /etc/fstab
+   63  swapoff -a
+   64  cat >>/etc/yum.repos.d/kubernetes.repo<<EOF
+   65  [kubernetes]
+   66  name=Kubernetes
+   67  baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+   68  enabled=1
+   69  gpgcheck=1
+   70  repo_gpgcheck=1
+   71  gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+   72          https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+   73  EOF
+   74  cat /etc/yum.repos.d/kubernetes.repo 
+   75  clear
+   76  yum install -y -q kubeadm kubelet kubectl
+   77  cd /etc/kubernetes/
+   78  ll
+   79  ll
+   80  cd
+   81  ll
+   82  clear
+   83  systemctl status kubelet
+   84  systemctl enable kubelet
+   85  systemctl start kubelet
+   86  systemctl status kubelet
+   87  passwd root
+   88  clear
+   89  ip address 
+   90  su - vagrant -c "kubectl create -f https://docs.projectcalico.org/v3.15/manifests/calico.yaml"
+   91  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.0.0.0/16
+   92  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.0.0.0/16 --ignore-preflight-errors
+   93  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.0.2.0/24 
+   94  clear
+   95  cat /etc/sysctl.conf 
+   96  kubeadm init
+   97  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.0.0.0/16 --ignore-preflight-errors=all
+   98  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=all
+   99  cd /etc/kubernetes/
+  100  ll
+  101  cd
+  102  kubeadm reset
+  103  kubeadm init
+  104  cd /var/lib/
+  105  ll
+  106  clear
+  107  mkdir -p $HOME/.kube
+  108  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  109  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  110  cd
+  111  ll
+  112  ll -a
+  113  cd .kube/
+  114  ll
+  115  cd
+  116  clear
+  117  cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  118  cd /etc/kubernetes/
+  119  ll
+  120  rm -rf /var/lib/etcd/
+  121  cd
+  122  kubeadm reset
+  123  clear
+  124  kubeadm init
+  125  cd /etc/kubernetes/
+  126  ll
+  127  systemctl stop kubelet
+  128  systemctl start kubelet
+  129  systemctl status kubelet
+  130  clear
+  131  ll
+  132  kubectl delete node --all
+  133  yum -y remove kubernetes 
+  134  set -x
+  135  cd
+  136  ll
+  137  clear
+  138  ll
+  139  cd /etc/kubernetes/
+  140  ll
+  141  cd
+  142  kubeadm reset --force
+  143  yum remove -y kubeadm kubectl kubelet kubernetes-cni kube*
+  144  yum autoremove -y
+  145  [ -e ~/.kube ] && rm -rf ~/.kube
+  146  [ -e /etc/kubernetes ] && rm -rf /etc/kubernetes
+  147  [ -e /opt/cni ] && rm -rf /opt/cni
+  148  clear
+  149  sudo yum install -y kubeadm kubelet kubectl
+  150  ll
+  151  cd /etc/kubernetes/
+  152  ll
+  153  systemctl status kubelet
+  154  systemctl enable kubelet
+  155  systemctl status kubelet
+  156  systemctl start kubelet
+  157  systemctl status kubelet
+  158  ll
+  159  ll
+  160  cd
+  161  cd /etc/kubernetes/
+  162  ll
+  163  cd
+  164  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=all
+  165  cd /etc/kubernetes/
+  166  ll
+  167  mkdir -p $HOME/.kube
+  168  cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  169  chown -R vagrant:vagrant /home/vagrant/.kube
+  170  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  171  ll
+  172  cd
+  173  ll
+  174  cd
+  175  ll
+  176  cd /home/vagrant/
+  177  ll
+  178  cd
+  179  ll
+  180  cd
+  181  ll
+  182  clear
+  183  ll
+  184  wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  185  yum install wget
+  186  clear
+  187  wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  188  ll
+  189  vim kube-flannel.yml 
+  190  kubectl apply -f kube-flannel.yml
+  191  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.244.0.0/16
+  192  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.0.0.0/16
+  193  clear
+  194  systemctl status containerd
+  195  sudo -i
+  196  strace -eopenat kubectl version
+  197  systemctl stop kubelet
+  198  systemctl start kubelet
+  199  ll
+  200  systemctl start kubelet
+  201  systemctl status kubelet
+  202  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.0.0.0/16
+  203  kubeadm init
+  204  ll
+  205  cd /etc/
+  206  ll
+  207  cd systemd/
+  208  ll
+  209  cd
+  210  ll
+  211  cd /etc/containerd/
+  212  ll
+  213  rm -rf config.toml 
+  214  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.0.0.0/16
+  215  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.244.0.0/16
+  216  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.244.0.0/16
+  217  kubeadm init
+  218  kubeadm reset
+  219  kubeadm init
+  220  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.244.0.0/16
+  221  kubeadm init --apiserver-advertise-address=192.168.56.10 
+  222  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=all
+  223  journalctl -xeu kubelet
+  224  clear
+  225  cd
+  226  ll
+  227  firewall-cmd --permanent --add-port=6443/tcp
+  228  firewall-cmd --permanent --add-port=2379-2380/tcp
+  229  firewall-cmd --permanent --add-port=10250/tcp
+  230  firewall-cmd --permanent --add-port=10251/tcp
+  231  firewall-cmd --permanent --add-port=10252/tcp
+  232  firewall-cmd --permanent --add-port=10255/tcp
+  233  firewall-cmd --reload
+  234  systemctl restart firewalld
+  235  firewall-cmd --permanent --add-port=6443/tcp
+  236  firewall-cmd --permanent --add-port=2379-2380/tcp
+  237  firewall-cmd --permanent --add-port=10250/tcp
+  238  firewall-cmd --permanent --add-port=10251/tcp
+  239  firewall-cmd --permanent --add-port=10252/tcp
+  240  firewall-cmd --permanent --add-port=10255/tcp
+  241  firewall-cmd --reload
+  242  modprobe br_netfilter
+  243  echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
+  244  clear
+  245  systemctl enable kubelet
+  246  systemctl start kubelet
+  247  swapoff  -a
+  248  kubeadm init
+  249  kubectl get nodes
+  250  ll
+  251  clear
+  252  wget https://docs.projectcalico.org/v3.11/manifests/calico.yaml
+  253  ll
+  254  kubectl create -f calico.yaml 
+  255  cd /etc/kubernetes/
+  256  ll
+  257  cd
+  258  clear
+  259  export KUBECONFIG=/etc/kubernetes/kubelet.conf
+  260  kubeadm init
+  261  sudo chown (id -u):(id -g) $HOME/.kube/config
+  262  chown (id -u):(id -g) $HOME/.kube/config
+  263  mkdir -p $HOME/.kube
+  264  cp -i /etc/kubernetes/admin.conf HOME/.kube/config sudo chown (id -u):$(id -g) 
+  265  cp -i /etc/kubernetes/admin.conf HOME/.kube/config
+  266  cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  267  chown (id -u):(id -g) $HOME/.kube/config
+  268  chown (id -u):$(id -g)
+  269  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  270  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  271  kubeadm init
+  272  systemctl stop firewalld
+  273  systemctl disable firewalld
+  274  kubeadm init
+  275  systemctl status containderd
+  276  systemctl status docker
+  277  cd /etc/containerd/
+  278  ll
+  279  systemctl restart containerd
+  280  systemctl status containerd
+  281  kubeadm init
+  282  kubeadm reset
+  283  kubeadm init
+  284  kubectl get nodes
+  285  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.0.0.0/16
+  286  kubectl get nodes
+  287  kubeadm reset
+  288  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.0.0.0/16
+  289  kubectl get nodes
+  290  kubectl get all --all-namespaces
+  291  cd
+  292  ll
+  293  kubectl create -f calico.yaml 
+  294  kubectl describe nodes
+  295  ll
+  296  kubectl create -f kube-flannel.yml 
+  297  kubectl get nodes
+  298  kubectl drain kmaster.example.com
+  299  kubectl get nodes
+  300  kubectl get nodes
+  301  kubectl get nodes
+  302  kubectl get nodes
+  303  k get pods -n kube-system
+  304  kubectl get pods -n kube-system
+  305  kubectl get nodes
+  306  kubectl delete pods --all
+  307  kubectl delete 
+  308  kubectl delete pods --all
+  309  kubectl delete node kmaster
+  310  kubectl delete node kmaster.kmaster.example.com
+  311  kubectl drain kmaster.kmaster.example.com --delete-local-data --force --ignore-daemonsets 
+  312  kubeadm reset
+  313  kubectl get nodes
+  314  kubectl delete node kmaster.kmaster.example.com
+  315  ll
+  316  kubectl -f calico.yaml 
+  317  kubectl create -f calico.yaml 
+  318  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.0.0.0/16
+  319  kubectl create -f calico.yaml 
+  320  ll
+  321  kubectl create -f kube-flannel.yml 
+  322  vim calico.yaml 
+  323  history 
+  324  export kubever=$(kubectl version | base64 | tr -d '\n')
+  325   kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$kubever"
+  326  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.0.0.0/16
+  327  kubectl reset 
+  328  kubeadm reset 
+  329  kubeadm init --apiserver-advertise-address=192.168.56.10 --pod-network-cidr=10.0.0.0/16
+  330   kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$kubever"
+  331  export kubever=$(kubectl version | base64 | tr -d '\n')
+  332  ll
+  333  kubectl -f  create calico.yaml 
+  334  kubectl create -f calico.yaml 
+  335  kubectl apply -f https://download.elastic.co/downloads/eck/1.6.0/all-in-one.yaml
+  336  clear
+  337  history 
+  338  cat history
+  339  history > history.backup
